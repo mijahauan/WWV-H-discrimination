@@ -15,6 +15,11 @@ minute, it calculates a ratio of the two SNRs.
 
 This script produces two products:
 1) a PNG of the WWV SNR, the WWVH SNR, and the ratio between the two.
-2) a CSV listing the WWV tone frequency, magnitude, and SNR,
-   the WWVH tone freuquency, magnitude, and SNR
+2) a CSV listing the WWV tone frequency, magnitude, and SNR;
+   the WWVH tone frequency, magnitude, and SNR;
    and the ratio of the two SNRs.  
+
+It requires the 'tone_sched_wwv.py' file in the same directory as the script to provide the 
+schedule of expected tones.  One defines the directory where the 1440 FLAC files reside in 
+the main() function. You will have to ensure the libraries the script imports are available
+to your python3 interpreter.
