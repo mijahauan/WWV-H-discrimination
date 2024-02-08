@@ -148,7 +148,7 @@ def main(directory):
     write_headers = not os.path.exists(data_filename)
 
     with open(data_filename, 'a', newline='') as csvfile:
-        fieldnames = ['DateTime', 'Tone_WWV', 'Tone_Magnitude_WWV', 'Noise_Floor_WWV', 'SNR_WWV', 'Tone_WWVH', 'Tone_Magnitude_WWVH', 'Noise_Floor_WWVH', 'SNR_WWVH', 'Ratio_SNR']
+        fieldnames = ['DateTime', 'Tone_WWV', 'Tone_Magnitude_WWV', 'Noise_Floor_WWV', 'Tone_WWVH', 'Tone_Magnitude_WWVH', 'Noise_Floor_WWVH']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         if write_headers:
@@ -192,12 +192,9 @@ def main(directory):
                 'Tone_WWV': tone_wwv,
                 'Tone_Magnitude_WWV': tone_magnitude_wwv if tone_magnitude_wwv is not None else 'None',
                 'Noise_Floor_WWV': noise_floor_wwv if noise_floor_wwv is not None else 'None',
-                'SNR_WWV': snr_to_db(wwv_snr[day_minute]) if wwv_snr[day_minute] is not None else 'None',
                 'Tone_WWVH': tone_wwvh,
                 'Tone_Magnitude_WWVH': tone_magnitude_wwvh if tone_magnitude_wwvh is not None else 'None',
-                'Noise_Floor_WWVH': noise_floor_wwvh if noise_floor_wwvh is not None else 'None',
-                'SNR_WWVH': snr_to_db(wwvh_snr[day_minute]) if wwvh_snr[day_minute] is not None else 'None',
-                'Ratio_SNR': snr_to_db(ratio_snr[day_minute]) if ratio_snr[day_minute] is not None else 'None'
+                'Noise_Floor_WWVH': noise_floor_wwvh if noise_floor_wwvh is not None else 'None'
             })
 
     # Plot the SNR data
