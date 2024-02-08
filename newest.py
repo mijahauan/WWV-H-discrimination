@@ -1,3 +1,7 @@
+# Script to discriminate WWV and WWVH signals broadcast on the same carrier frequency.
+# Author: Michael J. Hauan, AC0G
+# 2024-02-08
+
 import csv
 import subprocess
 import os
