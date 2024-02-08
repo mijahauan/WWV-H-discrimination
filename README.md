@@ -22,9 +22,9 @@ This script produces two products (examples above):
    and the ratio of the two SNRs.  
 
 It requires the 'tone_sched_wwv.py' file in the same directory as the script to provide the 
-schedule of expected tones.  One defines the directory where the 1440 FLAC files reside in 
-the main() function. You will have to ensure the libraries the script imports are available
-to your python3 interpreter.
+schedule of expected tones.  One defines the directory where the 1440 FLAC files reside just
+before invoking the main() function. You will have to ensure the libraries the script imports 
+are available to your python3 interpreter.
 
 I used an RX888 MKII 16bit SDR Receiver Radio LTC2208 ADC radio managed by 
 ka9q-radio (https://github.com/ka9q/ka9q-radio)
