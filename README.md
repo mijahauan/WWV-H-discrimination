@@ -13,7 +13,7 @@ period provides a window to measure the noise floor.  The script measures the ma
 tone and noise periods and calculates the SNR.  If both stations sound a tone in the same 
 minute, it calculates a ratio of the two SNRs.  
 
-This script produces two products:
+This script produces two products (examples above):
 1) a PNG of the WWV SNR, the WWVH SNR, and the ratio between the two.
 2) a CSV listing the WWV tone frequency, magnitude, and SNR;
    the WWVH tone frequency, magnitude, and SNR;
