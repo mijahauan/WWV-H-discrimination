@@ -30,7 +30,7 @@ This script produces the following (examples above):
 One can calculate the SNR for each station and the ratio of two with that informaton.
 
 It requires the 'tone_sched_wwv.py' file in the same directory as the script to provide the 
-schedule of expected tones.  One defines the directory where the 1440 FLAC files reside just
+schedule of expected tones.  One defines the directory where the 1440 .wv files reside just
 before invoking the main() function. You will have to ensure the libraries the script imports 
 are available to your python3 interpreter.
 
