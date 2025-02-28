@@ -16,6 +16,9 @@ wsprdaemon (https://github.com/rrobinett/wsprdaemon) stores 1440 1-minute wv (Wa
 so from second 1 through 44.  The remainder of the minute, seconds 45-59, have no tone so this 
 period provides a window to measure the noise floor.  
 
+The schedule of discriminating tones leaves gaps.  This script makes no attempt to interpolate these nor 
+to reconstruct the carrier, which would use these tones in any case.  We might get further information from the distinct second pulses at 1000 Hz for WWVH and 1200 Hz for WWV.  I have not yet attempted this.
+
 The script measures the magnitude of the tone and noise periods and calculates the SNR.  If both 
 stations sound a tone in the same minute, it calculates a ratio of the two SNRs.  It also 
 measures the deviation between the expected tone frequency and the received tone frequency.
@@ -38,7 +41,7 @@ I used an RX888 MKII 16bit SDR Receiver Radio LTC2208 ADC radio managed by
 ka9q-radio (https://github.com/ka9q/ka9q-radio)
 in Ubuntu 22.04 on a LattePanda Sigma (https://www.lattepanda.com/lattepanda-sigma).
 
-The alignment of the imgages below, while not exact, gives you an idea of the correspondence with the spectrograph of the combined carriers:
+The alignment of the images below, while not exact, gives you an idea of the correspondence with the spectrograph of the combined carriers:
 
 ![](./spectrum.png)
 ![](./2025-02-22_Frequency_10000000_Deviation_WWV.png)
