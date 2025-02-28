@@ -1,7 +1,3 @@
-# Script to discriminate WWV and WWVH signals broadcast on the same carrier frequency.
-# Author: Michael J. Hauan, AC0G
-# 2024-02-08
-
 import csv
 import subprocess
 import os
@@ -24,13 +20,15 @@ def apply_bandpass_filter(file_path, tone_freq, samplerate):
     Returns:
     bytes: The filtered audio data as a bytes object.
     """
-    sox_cmd = ['sox', file_path, '-t', 'wav', '-']
+    wvunpack_cmd = ['wvunpack', '-r', file_path, '-o', '-']
     if tone_freq is not None:
         lowcut = tone_freq - 4
         highcut = tone_freq + 4
-        sox_cmd.extend(['bandpass', str(tone_freq), str(highcut - lowcut)])
+        sox_cmd = ['sox', '-t', 'raw', '-r', str(samplerate), '-e', 'float', '-b', '32', '-c', '2', '-', '-t', 'wav', '-', 'bandpass', str(tone_freq), str(highcut - lowcut)]
+ 
     try:
-        filtered_output = subprocess.run(sox_cmd, stdout=subprocess.PIPE, check=True).stdout
+        wv_output = subprocess.run(wvunpack_cmd, stdout=subprocess.PIPE, check=True).stdout
+        filtered_output = subprocess.run(sox_cmd, input=wv_output, stdout=subprocess.PIPE, check=True).stdout
     except subprocess.CalledProcessError as e:
         print(f"Error processing file {file_path}: {e}")
         return None
@@ -102,12 +100,12 @@ def plot_snr(wwv_snr, wwvh_snr, ratio_snr, filename, date_str, frequency):
     wwvh_snr_db = [snr_to_db(snr) if snr is not None else None for snr in wwvh_snr]
     ratio_snr_db = [snr_to_db(ratio) if ratio is not None else None for ratio in ratio_snr]
 
-    plt.plot(minutes, wwvh_snr_db, color='blue', label='WWVH SNR', linestyle='-')
-    plt.plot(minutes, wwv_snr_db, color='red', label='WWV SNR', linestyle='-')
+    plt.scatter(minutes, wwvh_snr_db, color='blue', label='WWVH SNR', s=1)
+    plt.scatter(minutes, wwv_snr_db, color='red', label='WWV SNR', s=1)
 
     valid_ratios = [(minute, ratio) for minute, ratio in enumerate(ratio_snr_db) if ratio is not None]
     valid_minutes, valid_ratio_values = zip(*valid_ratios) if valid_ratios else ([], [])
-    plt.bar(valid_minutes, valid_ratio_values, color='green', alpha=0.5, label='Ratio WWV/WWVH')
+    plt.scatter(valid_minutes, valid_ratio_values, color='green', alpha=0.5, label='Ratio WWV/WWVH', s=1)
 
     plt.axhline(0, color='black', linewidth=0.8)
     plot_title = f'SNR and Ratio Comparison for {date_str}, Frequency: {frequency}'
@@ -131,7 +129,7 @@ def main(directory):
     wwvh_snr = [None] * 1440
     ratio_snr = [None] * 1440
 
-    files = sorted([f for f in os.listdir(directory) if f.endswith('_iq.flac')])
+    files = sorted([f for f in os.listdir(directory) if f.endswith('.wv')])
     if not files:
         print("No files found in the directory.")
         return
@@ -172,15 +170,15 @@ def main(directory):
             if tone_wwv is not None:
                 filtered_output = apply_bandpass_filter(file_path, tone_wwv, samplerate)
                 if filtered_output:
-                    tone_magnitude_wwv = analyze_filtered_audio(filtered_output, 1, 44, samplerate)
-                    noise_floor_wwv = analyze_filtered_audio(filtered_output, 45, 59, samplerate)
+                    tone_magnitude_wwv = analyze_filtered_audio(filtered_output, 1, 40, samplerate)
+                    noise_floor_wwv = analyze_filtered_audio(filtered_output, 41, 59, samplerate)
                     wwv_snr[day_minute] = calculate_snr(tone_magnitude_wwv, noise_floor_wwv)
 
             if tone_wwvh is not None:
                 filtered_output = apply_bandpass_filter(file_path, tone_wwvh, samplerate)
                 if filtered_output:
-                    tone_magnitude_wwvh = analyze_filtered_audio(filtered_output, 1, 44, samplerate)
-                    noise_floor_wwvh = analyze_filtered_audio(filtered_output, 45, 59, samplerate)
+                    tone_magnitude_wwvh = analyze_filtered_audio(filtered_output, 1, 40, samplerate)
+                    noise_floor_wwvh = analyze_filtered_audio(filtered_output, 41, 59, samplerate)
                     wwvh_snr[day_minute] = calculate_snr(tone_magnitude_wwvh, noise_floor_wwvh)
 
             if wwv_snr[day_minute] is not None and wwvh_snr[day_minute] is not None:
@@ -201,6 +199,5 @@ def main(directory):
     plot_snr(wwv_snr, wwvh_snr, ratio_snr, plot_filename, date_str, frequency)
 
 if __name__ == '__main__':
-    directory = '/home/wsprdaemon/wsprdaemon/wav-archive.d/20240131/AC0G_EM38ww/KA9Q_0_WWV_IQ@S000123_131/WWV_10'
+    directory = '/Users/mjh/Sync/Jupyter/WWVH-latest/wv_files'
     main(directory)
-
