@@ -38,7 +38,7 @@ I used an RX888 MKII 16bit SDR Receiver Radio LTC2208 ADC radio managed by
 ka9q-radio (https://github.com/ka9q/ka9q-radio)
 in Ubuntu 22.04 on a LattePanda Sigma (https://www.lattepanda.com/lattepanda-sigma).
 
-The alignment of the imgages below, while not exact, gives you and idea of the correspondence with the spectrograph of the combined carriers:
+The alignment of the imgages below, while not exact, gives you an idea of the correspondence with the spectrograph of the combined carriers:
 
 ![](./spectrum.png)
 ![](./2025-02-22_Frequency_10000000_Deviation_WWV.png)
