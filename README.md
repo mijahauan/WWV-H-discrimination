@@ -37,3 +37,8 @@ are available to your python3 interpreter.
 I used an RX888 MKII 16bit SDR Receiver Radio LTC2208 ADC radio managed by 
 ka9q-radio (https://github.com/ka9q/ka9q-radio)
 in Ubuntu 22.04 on a LattePanda Sigma (https://www.lattepanda.com/lattepanda-sigma).
+
+[](./Screenshot%202025-02-28%20at%2013.59.59.png)
+[](./2025-02-22_Frequency_10000000_Deviation_WWV.png)
+[](./2025-02-22_Frequency_10000000_Deviation_WWVH.png)
+[](./2025-02-22_Frequency_10000000_SNR.png)
