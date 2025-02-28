@@ -1,13 +1,16 @@
 # WWV-H-discrimination
 
-This python script relies on the per-minute IQ files stored by wsprdaemon listening to WWV/H 
-frequencies 2.5, 5, 10, 15, 20 MHz.  
+This python script uses the per-minute IQ files stored by wsprdaemon listening to 
+frequencies 2.5, 5, 10, 15, 20 MHz on which WWV and WWVH broadcast simultaneously.  
+
+Any analysis of receptions on these frequencies must address the fact that the data contain 
+some combination of the two broadcast 
 
 A published schedule of tones broadcast by WWV and WWVH enables an independent measurement of 
 each station broadcasting on the same carrier frequency.
 https://www.nist.gov/pml/time-and-frequency-division/time-distribution/radio-station-wwv/wwv-and-wwvh-digital-time-code
 
-wsprdaemon (https://github.com/rrobinett/wsprdaemon) stores 1440 1-minute FLAC files in a 
+wsprdaemon (https://github.com/rrobinett/wsprdaemon) stores 1440 1-minute wv (WavPack) files in a 
 24-hour UTC day centered on the carrier.  This script reads each file and applies a filter on 
 440, 500, and 600 Hz.  If either station (or both) broadcasts a tone in the given minute, it does 
 so from second 1 through 44.  The remainder of the minute, seconds 45-59, have no tone so this 
