@@ -2,7 +2,7 @@
 # per minute tone at 0 lasts 800 ms
 # per second tone lasts 5 ms
 schedule = {
-    0: {'WWV': 1000, 'WWVH': 1200},
+    0: {'WWV': None, 'WWVH': None},
     1: {'WWV': 600, 'WWVH': 440},
     2: {'WWV': 440, 'WWVH': 600},
     3: {'WWV': 600, 'WWVH': 500},
